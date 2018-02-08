@@ -8,15 +8,15 @@ int count = 0;
 Servo pitch_motor;
 
 // pins
-int SERVO_PIN = 0;
-
+int SERVO_PIN = 1;
+int pos = 0;
 
 
 WiFiServer server(80);
 void setup() {
   // setup pins
   pitch_motor.attach(SERVO_PIN);
-  pitch_motor.write(90);
+  pitch_motor.write(0);
   
   // create access point with login
   WiFi.mode(WIFI_AP);
@@ -36,7 +36,6 @@ void setup() {
 }
 
 void loop() {
-
   // check to see if server is still running
   WiFiClient client = server.available();
   if (!client) {
@@ -75,6 +74,10 @@ void loop() {
       key += pch[1]-97;
     }
     play(key);
+
+    // respond
+    client.flush();
+    client.print("HTTP/1.1 200 OK\r\n");
   }
 }
 
@@ -82,10 +85,12 @@ void play(int key) {
   switch (key) {
     case 3:
       // code for low c
+      pitch_motor.write(45);
       break;
 
     case 22:
       // code for c sharp
+      pitch_motor.write(135);
       break;
 
     case 4:
@@ -136,31 +141,4 @@ void play(int key) {
       Serial.println("Invalid input.");
   }
 }
-
-/*void serialEvent()
-{
-   while(Serial.available()) 
-   {
-      char ch = Serial.read();
-      
-      if(index < MaxChars && isDigit(ch)) { 
-            strValue[index++] = ch; 
-      } else { 
-            strValue[index] = 0; 
-            newAngle = atoi(strValue); 
-            if(newAngle > 0 && newAngle < 180){
-                   if(newAngle < angle) 
-                       for(; angle > newAngle; angle -= 1) {
-                             myservo.write(angle);
-                       }  
-                    else 
-                       for(; angle < newAngle; angle += 1){
-                          myservo.write(angle);
-                    } 
-            }
-            index = 0;
-            angle = newAngle;
-      } 
-   }
-}*/
 
