@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Jam</title>	
+	<link rel="stylesheet" href="{% static 'instruments/styles.css' %}">
+	<link rel="shortcut icon" href="{% static 'instruments/favicon.ico' %}" type="image/x-icon">
+	<link rel="icon" href="{% static 'instruments/favicon.ico' %}" type="image/x-icon">
+</head>
+<body>
+	<script type="riot/tag" src="{% static 'instruments/instrument.tag' %}"></script>
+	<script src="https://cdn.jsdelivr.net/npm/riot@3.8/riot+compiler.min.js">	
+	</script>
+	<div id='inst1'>
+		<instrument name="ESP8266" opts="{ params }"></instrument>
+	</div>
+	<div id='inst2'>
+		<instrument name="HARP" opts="{ params }"></instrument>
+	</div>
+	<script>
+		params = {
+			"ESP8266": {
+				"name": "ESP8266",
+				"c"  : "a",
+				"cs" : "w",
+				"d"  : "s",
+				"ds" : "e",
+				"e"  : "d",
+				"f"  : "f",
+				"fs" : "t",
+				"g"  : "g",
+				"gs" : "y",
+				"a"  : "h",
+				"as" : "u",
+				"b"  : "j",
+				"ch" : "k"
+			},
+			"HARP": {
+				"name": "HARP",
+				"c"  : "z",
+				"d"  : "x",
+				"e"  : "c",
+				"f"  : "v",
+				"g"  : "b",
+				"a"  : "n",
+				"b"  : "m",
+				"ch" : "."
+			}
+		}
+		riot.mount('*');
+	</script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Jam</title>	
+	<link rel="stylesheet" href="styles.css">
+	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+	<link rel="icon" href="favicon.ico" type="image/x-icon">
+</head>
+<body>
+	<script src="instrument.tag" type="riot/tag"></script>
+	<script src="https://cdn.jsdelivr.net/npm/riot@3.8/riot+compiler.min.js"></script>
+	<div id='inst1'>
+		<instrument name="ESP8266" opts="{ params }"></instrument>
+	</div>
+	<div id='inst2'>
+		<instrument name="HARP" opts="{ params }"></instrument>
+	</div>
+	<script>
+		params = {
+			"ESP8266": {
+				"name": "ESP8266",
+				"c": "a",
+				"cs": "s",
+				"d": "d"
+			},
+			"HARP": {
+				"name": "HARP",
+				"c": "q",
+				"cs": "w",
+				"d": "e"
+			}
+		}
+		riot.mount('instrument');
+	</script>
+	<style type="riot"></style>
+</body>
+</html>
