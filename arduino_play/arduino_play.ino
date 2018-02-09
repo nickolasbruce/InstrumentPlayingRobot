@@ -1,7 +1,9 @@
 #include <ESP8266WiFi.h>
 #include <Servo.h>
-#include <stdio.h>
 #include <string.h>
+
+// instrument name
+const char * INS_NAME = "PHOTONIC_WHISTLE";
 
 
 int count = 0;
@@ -9,42 +11,61 @@ int count = 0;
 // pins
 Servo pitch;
 Servo pluck;
-int PITCH_PIN = D1;
-int PLUCK_PIN = D0;
+const int PITCH_PIN = D1;
+const int PLUCK_PIN = D0;
+const int LIGHT_PIN = A0;
+const int lightThreshold = 10;
+float Rsensor;
 
+// Wifi settings
+const char * SSID = "Linksys00292";
+const char * PASSWORD = "1fbjgxdtpv";
 
 WiFiServer server(80);
+
 void setup() {
+  Serial.begin(9600);
+  
   // setup pins
   pitch.attach(PITCH_PIN);
   pluck.attach(PLUCK_PIN);
   pitch.write(10);
   pluck.write(0);
   
-  // create access point with login
-  WiFi.mode(WIFI_AP);
-  WiFi.softAP("WhyFi", "password");
+  // login to existing wifi network as station
+  WiFi.mode(WIFI_STA);
+  WiFi.begin(SSID, PASSWORD);
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(250);
+  }
+
+  // report status
+  Serial.print("Connected to ");
+  Serial.println(SSID);
+  Serial.print("IP Address: ");
+  Serial.println(WiFi.localIP());
+
   server.begin();
-
-  // static ip, gateway, netmask
-  //WiFi.config(IPAddress(192,168,1,2), 
-  //            IPAddress(192,168,1,1), 
-  //            IPAddress(255,255,255,0));
-
-  // get server IP
-  Serial.begin(9600);
-  IPAddress HTTPS_ServerIP = WiFi.softAPIP();
-  Serial.print("Server IP is: ");
-  Serial.println(HTTPS_ServerIP);
 }
 
 void loop() {
+  // update light sensor
+  int sensorValue = analogRead(LIGHT_PIN);
+  Rsensor = (float)(1023-sensorValue)*10/sensorValue;
+  if (Rsensor > lightThreshold) {
+    Serial.print("Light taw value: ");
+    Serial.println(sensorValue);
+    Serial.print("Light resistance: ");
+    Serial.println(Rsensor,DEC);
+    delay(500);
+  }
+
+  
   // check to see if server is still running
   WiFiClient client = server.available();
   if (!client) {
     return;
   }
-  Serial.println("Somebody has connected.");
 
   // read first line of request
   String request = client.readStringUntil('\r');
@@ -77,8 +98,13 @@ void loop() {
       key += pch[1]-96;
     }
     
-    Serial.println(key);
-    play(key);
+    Serial.print("Key requested: ");
+    Serial.println(pch);
+    if (INS_NAME == "PHOTONIC_WHISTLE") {
+      
+    } else {
+      play(key);
+    }
 
     // respond
     client.flush();
@@ -157,6 +183,6 @@ void play(int key) {
     default:
       Serial.println("Invalid input.");
   }
-  pluck_it();
+  //pluck_it();
 }
 

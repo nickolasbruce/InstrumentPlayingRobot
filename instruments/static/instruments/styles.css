@@ -8,14 +8,24 @@ body {
 	background-size: 70px 120px;
 }
 
+h1 {
+	font-family: sans-serif;
+	color: white;
+	text-shadow:
+		 	-1px -1px 0 #000,  
+		  1px -1px 0 #000,
+		  -1px 1px 0 #000,
+		  1px 1px 0 #000;
+}
+
 #inst1 {
 	position: absolute;
-	top: 0px;
-	left: 5px;
+	top: 5vw;
+	left: 2vw;
 }
 
 #inst2 {
 	position: absolute;
-	top: 0px;
-	left: 55vw;
+	top: 5vw;
+	left: 50vw;
 }

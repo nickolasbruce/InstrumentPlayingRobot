@@ -3,25 +3,27 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Jam</title>	
+	<title>Jam your fingers</title>	
 	<link rel="stylesheet" href="{% static 'instruments/styles.css' %}">
 	<link rel="shortcut icon" href="{% static 'instruments/favicon.ico' %}" type="image/x-icon">
 	<link rel="icon" href="{% static 'instruments/favicon.ico' %}" type="image/x-icon">
 </head>
 <body>
-	<script type="riot/tag" src="{% static 'instruments/instrument.tag' %}"></script>
-	<script src="{% static 'instruments/riot+compiler.min.js' %}">	
+	<script src="{% static 'instruments/riot.min.js' %}">	
 	</script>
+	<script src="{% static 'instruments/instrument.js' %}"></script>
+	<h1>Why don't you be like a strawberry and jam?</h1>
 	<div id='inst1'>
-		<instrument name="ESP8266" opts="{ params }"></instrument>
+		<instrument name="{ names[0] }" opts="{ params }"></instrument>
 	</div>
 	<div id='inst2'>
-		<instrument name="HARP" opts="{ params }"></instrument>
+		<instrument name="{ names[1] }" opts="{ params }"></instrument>
 	</div>
 	<script>
+		names = ["PhotonicWhistle", "RubberRockBand"];
 		params = {
-			"ESP8266": {
-				"name": "ESP8266",
+			"1": {
+				"name": names[0],
 				"c"  : "a",
 				"cs" : "w",
 				"d"  : "s",
@@ -36,8 +38,8 @@
 				"b"  : "j",
 				"ch" : "k"
 			},
-			"HARP": {
-				"name": "HARP",
+			"2": {
+				"name": names[1],
 				"c"  : "z",
 				"d"  : "x",
 				"e"  : "c",
@@ -47,7 +49,7 @@
 				"b"  : "m",
 				"ch" : "."
 			}
-		}
+		};
 		riot.mount('*');
 	</script>
 </body>

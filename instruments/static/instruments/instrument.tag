@@ -29,8 +29,8 @@
 		.inst_container {
 			position: relative;
 			margin: 10px;
-			width: 53vw;
-			height: 38vw;
+			width: 44vw;
+			height: 32vw;
 			border-radius: 1vw;
 			border: 3px solid;
 			background-color: white;
@@ -38,9 +38,9 @@
 
 		.header {
 			position: absolute;
-			width: 49vw;
-			height: 8.7vw;
-			left: 2vw;
+			width: 40.8vw;
+			height: 7.2vw;
+			left: 2.1vw;
 			top: 2vw;
 			background-size: contain;
 			background-image: url('/static/instruments/header.png');
@@ -50,21 +50,21 @@
 			position: absolute;
 			font-family: sans-serif;
 			color: #10AAAF;
-			font-size: 6vh;
+			font-size: 5vh;
 			font-weight: bold;
 			text-shadow:
 			 	-1px -1px 0 #000,  
 			  1px -1px 0 #000,
 			  -1px 1px 0 #000,
 			  1px 1px 0 #000;
-			top: 4vw;
+			top: 3.6vw;
 			left: 2vw;
 		}
 
 		.header form {
 			position: absolute;
-			top: 3.8vw;
-			left: 30vw;
+			top: 3vw;
+			left: 24vw;
 			color: #10AAAF;
 			font-family: sans-serif;
 			text-shadow:
@@ -82,32 +82,32 @@
 
 		.white_key, .black_key {
 			position: absolute;
-			top: 10.5vw;
+			top: 9.2vw;
 			background-size: cover;
 		}
 
 		.white_key {
-			width: 6vw;
-			height: 25.8vw;
+			width: 5vw;
+			height: 21.4vw;
 			background-image: url('/static/instruments/white_sprite.png');
 			background-position: 0 0;
 			z-index: 100;
 		}
 
 		.white_key.active {
-			background-position: 0 25.8vw;
+			background-position: 0 21.4vw;
 		}
 
 		.black_key {
-			width: 3.8vw;
-			height: 14.4vw;
+			width: 3.2vw;
+			height: 12vw;
 			background-image: url('/static/instruments/black_sprite.png');
 			background-position: 0 0;
 			z-index: 200;
 		}
 
 		.black_key.active {
-			background-position: 0 14.4vw;
+			background-position: 0 12vw;
 		}
 
 		.c {
@@ -115,51 +115,51 @@
 		}
 
 		.cs {
-			left: 6.57vw;
+			left: 5.9vw;
 		}
 
 		.d {
-			left: 8.5vw;
+			left: 7.5vw;
 		}
 
 		.ds {
-			left: 12.57vw;
+			left: 10.9vw;
 		}
 
 		.e {
-			left: 14.5vw;
+			left: 12.5vw;
 		}
 
 		.f {
-			left: 20.5vw;
+			left: 17.5vw;
 		}
 
 		.fs {
-			left: 24.57vw;
+			left: 20.9vw;
 		}
 
 		.g {
-			left: 26.5vw;
+			left: 22.5vw;
 		}
 
 		.gs {
-			left: 30.57vw;
+			left: 25.9vw;
 		}
 
 		.a {
-			left: 32.5vw;
+			left: 27.5vw;
 		}
 
 		.as {
-			left: 36.57vw;
+			left: 30.9vw;
 		}
 
 		.b {
-			left: 38.5vw;
+			left: 32.5vw;
 		}
 
 		.ch {
-			left: 44.5vw;
+			left: 37.5vw;
 		}
 
 		.counter {
@@ -239,10 +239,11 @@
 		// allow keypresses
 		document.onkeydown = function(event){
 			var key = event.which || event.keyCode;
-			for (var prop in opts.opts) {
-				for(var index in opts.opts[prop]) {
-					if (opts.opts[prop][index]==String.fromCharCode(key+32)) {
-						classes = prop + " " + index;
+			for (var num in opts.opts) {
+				for(var note in opts.opts[num]) {
+					element = opts.opts[num]
+					if (element[note]==String.fromCharCode(key+32)) {
+						classes = element["name"] + " " + note;
 						e = document.getElementsByClassName(classes)[0];
 						clickedKey(e);
 					}

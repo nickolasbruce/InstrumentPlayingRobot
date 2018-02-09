@@ -3,7 +3,6 @@ from django.shortcuts import redirect
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
-import serial
 import urllib3
 
 # Create your views here.
@@ -26,8 +25,6 @@ def jsonhandler(request):
 			print(url)
 			http = urllib3.PoolManager()
 			r = http.request('GET', url)
-		#ser = serial.Serial(note['port'], 9600)
-		#ser.write(note['key'] + '#')
 
 		# Pass data to view
 		context = {
