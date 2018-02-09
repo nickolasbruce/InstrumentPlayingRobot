@@ -112,12 +112,12 @@ void PhotonicWhistle::play(int key) {
 
 		// normalized levels
 		target_proportion = (float) (target-map[0]) / range;
-		current_proportion = (float) (target-map[0]) / range;
+		current_proportion = (float) (current_level-map[0]) / range;
 		error = target_proportion - current_proportion;
 		if (error < 0.9) derror = error;
 
 		// move motor as a proportion of level
-		pos_range = this.pos_high - this.pow_low;
+		pos_range = this.pos_high - this.pos_low;
 		movement = pos_range * (error * PHOT_PROP + derror * PHOT_DERIV);
 		this.motor.write(this.motor.read() + movement);
 		delay(50);
