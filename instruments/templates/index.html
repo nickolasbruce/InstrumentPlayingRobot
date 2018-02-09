@@ -10,7 +10,7 @@
 </head>
 <body>
 	<script type="riot/tag" src="{% static 'instruments/instrument.tag' %}"></script>
-	<script src="https://cdn.jsdelivr.net/npm/riot@3.8/riot+compiler.min.js">	
+	<script src="{% static 'instruments/riot+compiler.min.js' %}">	
 	</script>
 	<div id='inst1'>
 		<instrument name="ESP8266" opts="{ params }"></instrument>

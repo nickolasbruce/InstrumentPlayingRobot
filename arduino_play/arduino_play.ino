@@ -5,18 +5,21 @@
 
 
 int count = 0;
-Servo pitch_motor;
 
 // pins
-int SERVO_PIN = 1;
-int pos = 0;
+Servo pitch;
+Servo pluck;
+int PITCH_PIN = D1;
+int PLUCK_PIN = D0;
 
 
 WiFiServer server(80);
 void setup() {
   // setup pins
-  pitch_motor.attach(SERVO_PIN);
-  pitch_motor.write(0);
+  pitch.attach(PITCH_PIN);
+  pluck.attach(PLUCK_PIN);
+  pitch.write(10);
+  pluck.write(0);
   
   // create access point with login
   WiFi.mode(WIFI_AP);
@@ -24,9 +27,9 @@ void setup() {
   server.begin();
 
   // static ip, gateway, netmask
-  WiFi.config(IPAddress(192,168,1,2), 
-              IPAddress(192,168,1,1), 
-              IPAddress(255,255,255,0));
+  //WiFi.config(IPAddress(192,168,1,2), 
+  //            IPAddress(192,168,1,1), 
+  //            IPAddress(255,255,255,0));
 
   // get server IP
   Serial.begin(9600);
@@ -45,7 +48,7 @@ void loop() {
 
   // read first line of request
   String request = client.readStringUntil('\r');
-  if (!request.length()) {
+  if (request.length() == 0) {
     return;
   }
 
@@ -68,11 +71,13 @@ void loop() {
     pch = strtok(NULL, "/");
     int key = 0;
     if (pch[0] != NULL) {
-      key += pch[0]-97;
+      key += pch[0]-96;
     }
     if (pch[1] != NULL) {
-      key += pch[1]-97;
+      key += pch[1]-96;
     }
+    
+    Serial.println(key);
     play(key);
 
     // respond
@@ -81,20 +86,26 @@ void loop() {
   }
 }
 
+void pluck_it() {
+  pluck.write(90);
+  delay(1000);
+  pluck.write(0);
+}
+
 void play(int key) {
   switch (key) {
     case 3:
       // code for low c
-      pitch_motor.write(45);
+      pitch.write(59);
       break;
 
     case 22:
       // code for c sharp
-      pitch_motor.write(135);
       break;
 
     case 4:
       // code for d
+      pitch.write(52);
       break;
 
     case 23:
@@ -103,10 +114,12 @@ void play(int key) {
 
     case 5:
       // code for e
+      pitch.write(45);
       break;
 
     case 6:
       // code for f
+      pitch.write(38);
       break;
 
     case 25:
@@ -115,6 +128,7 @@ void play(int key) {
 
     case 7:
       // code for g
+      pitch.write(31);
       break;
 
     case 26:
@@ -123,6 +137,7 @@ void play(int key) {
       
     case 1:
       // code for a
+      pitch.write(24);
       break;
 
     case 20:
@@ -131,14 +146,17 @@ void play(int key) {
 
     case 2:
       // code for b
+      pitch.write(17);
       break;
 
     case 11:
       // code for high c
+      pitch.write(10);
       break;
 
     default:
       Serial.println("Invalid input.");
   }
+  pluck_it();
 }
 

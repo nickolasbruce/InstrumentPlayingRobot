@@ -174,9 +174,14 @@
 
 			// animate keys
 			e.classList.add('active');
-			setTimeout(function() {
+
+			document.addEventListener('keyup', function() {
 				e.classList.remove('active');
-			}, 250);
+			});
+
+			document.addEventListener('mouseup', function() {
+				e.classList.remove('active');
+			});
 
 			// gather request info
 			classes = e.className.split(" ");
@@ -217,17 +222,18 @@
 			// allow clicking
 			white = document.getElementsByClassName(opts.name + " white_key");
 			for (var i=0; i<white.length; i++) {
-				white[i].addEventListener('click', function(n) {
+				white[i].addEventListener('mousedown', function(n) {
 					return function() {clickedKey(n)};
 				}(white[i]), false);
 			}
 
 			black = document.getElementsByClassName(opts.name + " black_key");
 			for (var i=0; i<black.length; i++) {
-				black[i].addEventListener('click', function(n) {
+				black[i].addEventListener('mousedown', function(n) {
 					return function() {clickedKey(n)};
 				}(black[i]), false);
 			}
+
 		})
 
 		// allow keypresses
